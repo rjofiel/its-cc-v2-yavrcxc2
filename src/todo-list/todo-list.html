@@ -1,6 +1,10 @@
 <div class="p-4 flex flex-col items-center border bg-white w-full rounded">
   <h2 class="mb-4">{{ count() }} things I have to do:</h2>
 
+   <form [formGroup]="todoForm" id="todo-form">
+           
+    </form>
+
   <ul class="flex flex-col justify-center gap-4 p-2" id="todoList">
     @for (todo of store.todos(); track todo.id) {
     <li class="flex gap-4">
