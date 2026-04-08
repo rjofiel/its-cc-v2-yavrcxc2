@@ -109,4 +109,11 @@ describe("TodoListComponent", () => {
 
     expect(store.addTodo).toHaveBeenCalledWith("Test Task", 2);
   });
+
+  it('should call deleteTodo when delete button is clicked', () => {
+        const deleteBtn = fixture.nativeElement.querySelector('.delete-btn') as HTMLButtonElement;
+        deleteBtn.click();
+        
+        expect(store.deleteTodo).toHaveBeenCalledWith('1');
+      });
 });
