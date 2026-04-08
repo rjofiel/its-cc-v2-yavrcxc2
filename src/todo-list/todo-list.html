@@ -1,7 +1,7 @@
 <div class="p-4 flex flex-col items-center border bg-white w-full rounded">
   <h2 class="mb-4">{{ count() }} things I have to do:</h2>
 
-  <form [formGroup]="todoForm" id="todo-form">
+  <form [formGroup]="todoForm" (ngSubmit)="onSubmit()" id="todo-form">
     <div class="form-group">
       <label for="title" class="visually-hidden">Título</label>
       <input
@@ -21,6 +21,14 @@
         <option [value]="3">Alta</option>
       </select>
     </div>
+
+    <button
+      type="submit"
+      [disabled]="todoForm.invalid"
+      aria-describedby="submit-status"
+    >
+      Agregar
+    </button>
   </form>
 
   <ul class="flex flex-col justify-center gap-4 p-2" id="todoList">
