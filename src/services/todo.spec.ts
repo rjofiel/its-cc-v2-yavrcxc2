@@ -23,6 +23,16 @@ describe("TodoStore Service", () => {
 
     expect(store.todos()[0].id).not.toEqual(store.todos()[1].id)
     expect(store.todos()[0].title).toEqual(store.todos()[1].title)
+  })
 
+  it('should remove a todo by id', () => {
+    const store = new TodoStore();
+    store.addTodo('Task 1', 1);
+
+    const todo = store.todos()[0].id;
+
+    store.deleteTodo(todo.id);
+
+    expect(store.todos()).toHaveLength(0);
   })
 });
