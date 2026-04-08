@@ -74,6 +74,13 @@
         class="hover:cursor-pointer"
         [attr.aria-label]="todo.completed ? 'Marcado como pendiente' : 'Marcado como completado'"
       />
+      <button
+        class="delete-btn"
+        (click)="delete(todo.id)"
+        [attr.aria-label]="'Eliminar tarea: ' + todo.title"
+      >
+        Eliminar
+      </button>
     </li>
     }
   </ul>

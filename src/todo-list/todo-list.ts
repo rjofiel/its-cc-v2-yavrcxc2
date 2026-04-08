@@ -33,7 +33,11 @@ export class TodoListComponent {
   }
 
   public onSubmit = () => {
-      const { title, priority } = this.todoForm.value;
-      this.store.addTodo(title, priority);
-  }
+    const { title, priority } = this.todoForm.value;
+    this.store.addTodo(title, priority);
+  };
+
+  public delete = (id: string) => {
+    this.store.deleteTodo(id);
+  };
 }
