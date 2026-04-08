@@ -59,7 +59,7 @@
   </section>
 
   <ul class="flex flex-col justify-center gap-4 p-2" id="todoList">
-    @for (todo of store.todos(); track todo.id) {
+    @for (todo of store.filteredTodos(); track todo.id) {
     <li class="flex gap-4">
       <label for="task1Checkbox" class="hover:cursor-pointer"
         >{{todo.title}}</label
