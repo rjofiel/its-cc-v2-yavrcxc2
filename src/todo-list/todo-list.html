@@ -1,21 +1,33 @@
-<div class="p-4 flex flex-col items-center border bg-white w-full rounded">
-  <h2 class="mb-4">{{ count() }} things I have to do:</h2>
+<div class="p-6 max-w-md mx-auto bg-white border rounded-lg shadow-sm">
+  <h2 class="text-lg font-semibold mb-4 text-center">
+    {{ count() }} things I have to do:
+  </h2>
 
-  <form [formGroup]="todoForm" (ngSubmit)="onSubmit()" id="todo-form">
-    <div class="form-group">
+  <form
+    [formGroup]="todoForm"
+    (ngSubmit)="onSubmit()"
+    id="todo-form"
+    class="flex flex-col gap-2 mb-4"
+  >
+    <div class="form-group space-y-2">
       <label for="title" class="visually-hidden">Título</label>
       <input
         id="title"
         type="text"
         formControlName="title"
         placeholder="Nueva tarea..."
+        class="w-full px-3 py-2 border rounded focus:ring-purple-500 focus:border-transparent outline-none"
         aria-describedby="title-error"
       />
     </div>
 
-    <div class="form-group">
+    <div class="form-group space-x-2">
       <label for="priority" class="visually-hidden">Prioridad</label>
-      <select id="priority" formControlName="priority">
+      <select
+        id="priority"
+        formControlName="priority"
+        class="px-2 py-2 border rounded bg-white"
+      >
         <option [value]="1">Baja</option>
         <option [value]="3">Alta</option>
       </select>
@@ -24,16 +36,25 @@
     <button
       type="submit"
       [disabled]="todoForm.invalid"
+      class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:bg-gray-300"
       aria-describedby="submit-status"
     >
       Agregar
     </button>
   </form>
 
-  <section id="todo-filters" role="group" aria-label="Filtrar tareas">
+  <section
+    id="todo-filters"
+    class="flex gap-2 mb-4 justify-center"
+    role="group"
+    aria-label="Filtrar tareas"
+  >
     <button
       type="button"
-      [class.active]="currentFilter() === 'all'"
+      class="px-3 py-1 text-sm rounded transition"
+      [class.bg-purple-600]="currentFilter() === 'all'"
+      [class.text-white]="currentFilter() === 'all'"
+      [class.bg-gray-100]="currentFilter() !== 'all'"
       (click)="setFilter('all')"
       [attr.aria-pressed]="currentFilter() === 'all'"
     >
@@ -41,7 +62,10 @@
     </button>
     <button
       type="button"
-      [class.active]="currentFilter() === 'pending'"
+      class="px-3 py-1 text-sm rounded transition"
+      [class.bg-purple-600]="currentFilter() === 'pending'"
+      [class.text-white]="currentFilter() === 'pending'"
+      [class.bg-gray-100]="currentFilter() !== 'pending'"
       (click)="setFilter('pending')"
       [attr.aria-pressed]="currentFilter() === 'pending'"
     >
@@ -49,7 +73,10 @@
     </button>
     <button
       type="button"
-      [class.active]="currentFilter() === 'completed'"
+      class="px-3 py-1 text-sm rounded transition"
+      [class.bg-purple-600]="currentFilter() === 'completed'"
+      [class.text-white]="currentFilter() === 'completed'"
+      [class.bg-gray-100]="currentFilter() !== 'completed'"
       (click)="setFilter('completed')"
       [attr.aria-pressed]="currentFilter() === 'completed'"
     >
@@ -57,15 +84,22 @@
     </button>
   </section>
 
-  <ul class="flex flex-col justify-center gap-4 p-2" id="todoList">
+  <ul class="flex flex-col gap-2" id="todoList">
     @for (todo of store.filteredTodos(); track todo.id) {
-    <li class="flex gap-4">
-      <label [for]="'todo-' + todo.id" class="hover:cursor-pointer"
-        >{{todo.title}}</label
+    <li
+      class="flex gap-3 items-center p-2 bg-gray-50 rounded hover:bg-gray-100"
+    >
+      <label
+        [for]="'todo-' + todo.id"
+        class="flex-1 cursor-pointer"
+        [class.line-through]="todo.completed"
       >
+        {{todo.title}}
+      </label>
+
       <button
         [id]="'priority-' + todo.id"
-        class="hover:cursor-pointer"
+        class="hover:opacity-70"
         [class.fill-red-500]="todo.completed"
         (click)="toggleComplete(todo.id)"
       >
@@ -100,17 +134,21 @@
         type="checkbox"
         [name]="todo.title"
         [id]="'todo-' + todo.id"
-        class="hover:cursor-pointer"
+        2
+        class="w-4 h-4"
         [attr.aria-label]="todo.completed ? 'Marcado como pendiente' : 'Marcado como completado'"
       />
+
       <button
-        class="delete-btn"
+        class="delete-btn px-2 py-1 text-red-600 hover:bg-red-50 rounded text-sm"
         (click)="delete(todo.id)"
         [attr.aria-label]="'Eliminar tarea: ' + todo.title"
       >
         Eliminar
       </button>
     </li>
+    } @empty {
+    <li class="text-gray-400 p-4 text-center">No hay tareas</li>
     }
   </ul>
 </div>
