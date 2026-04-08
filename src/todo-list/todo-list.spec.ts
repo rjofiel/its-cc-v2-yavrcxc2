@@ -72,4 +72,9 @@ describe("TodoListComponent", () => {
 
     expect(todoTaskElement!.className).not.toContain("test");
   });
+
+  it("should have todo form to create forms", () => {
+    expect(component.todoForm).toBeTruthy();
+  })
+
 });
