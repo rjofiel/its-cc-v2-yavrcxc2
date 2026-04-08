@@ -92,6 +92,15 @@ describe("TodoListComponent", () => {
     expect(compiled.querySelector("#priority")).toBeTruthy();
   });
 
+  it("should have submit button", () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const button = compiled.querySelector(
+      'button[type="submit"]',
+    ) as HTMLButtonElement;
+    expect(button).toBeTruthy();
+    expect(button.textContent).toContain("Agregar");
+  });
+
   it("should call addTodo when form is submitted", () => {
     component.todoForm.get("title")?.setValue("Test Task");
     component.todoForm.get("priority")?.setValue(2);
