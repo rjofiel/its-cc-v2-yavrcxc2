@@ -77,4 +77,9 @@ describe("TodoListComponent", () => {
     expect(component.todoForm).toBeTruthy();
   })
 
+  it('should have a todo form section', () => {
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.querySelector('#todo-form')).toBeTruthy();
+  })
+
 });
