@@ -15,4 +15,14 @@ describe("TodoStore Service", () => {
     expect(store.todos()[0].title).toEqual('Task 1')
     expect(store.todos()[0].priority).toEqual(1)
   })
+
+  it('should generate with an unique id', () => {
+    const store = new TodoStore();
+    store.addTodo('Task 1', 1);
+    store.addTodo('Task 1', 2);
+
+    expect(store.todos()[0].id).not.toEqual(store.todos()[1].id)
+    expect(store.todos()[0].title).toEqual(store.todos()[1].title)
+
+  })
 });
