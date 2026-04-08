@@ -29,7 +29,7 @@ describe("TodoStore Service", () => {
     const store = new TodoStore();
     store.addTodo('Task 1', 1);
 
-    const todo = store.todos()[0].id;
+    const todo = store.todos()[0];
 
     store.deleteTodo(todo.id);
 
