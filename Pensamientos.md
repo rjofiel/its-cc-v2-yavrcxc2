@@ -4,7 +4,7 @@ Durante la configuración inicial de Jest para Angular hubo varios problemas:
 
 1. **Paquetes Jest faltantes**: Fue necesario instalar la paqueteria necesaria.
 
-  ```json
+```json
   {
     "@types/jest": "^30.0.0",
     "jest": "^30.3.0",
@@ -12,7 +12,7 @@ Durante la configuración inicial de Jest para Angular hubo varios problemas:
     "jest-preset-angular": "^16.1.2",
     "jsdom": "^29.0.2",
   }
-  ```
+```
 
 2. **Faltaba configurar tsconfig.spec.json**: Se creo una configuracion basica.
 
@@ -39,10 +39,17 @@ public filteredTodos = computed(() => {
 ```
 
 ### 2. Persistencia (localStorage / API)
-El codigo usa solo signals en memoria. Si el usuario actualiza la pagina, pierde los datos.
 
-- Opcion principal: Guardar en localStorage en el effect del signal
-- Alternativa: Consumir dummyjson para datos reales - No existee persistencia se deberia de ampliar a usar localStorage pero separando deleted y added.
+  - **Opción principal:**  
+  Persistir los datos en `localStorage` utilizando un `effect` sobre el `signal`.
+
+  - **Alternativa:**  
+  Consumir la API de DummyJSON como se propone.  
+  Dado que no existe persistencia en esta API, sería necesario ampliarlo combinándolo con `localStorage`, separando los elementos agregados y eliminados.
+
+      - Crear un nuevo servicio para gestionar la comunicación con la API.
+      - Utilizar un store para centralizar el estado y adaptarlo a esta integración.
+      - Controlar duplicidad de peticiones
 
 ### 3. Validación de Formulario
 No existe validacion del formulario, no hay control. Se deberia de agregar validacion de required, logitudes.
@@ -69,6 +76,8 @@ También sería necesario aplicar esta misma separación en sus correspondientes
 - `todo-form` → creación de nuevas tareas
 - `todo-filter` → filtrado de tareas
 
+### 8. Posibilidad de paginación
+ La API Dummy tiene documentacion para integrarla.
 ---
 
 ## Bugs conocidos (sin corregir por tiempo)
