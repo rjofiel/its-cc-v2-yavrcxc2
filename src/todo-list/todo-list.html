@@ -65,8 +65,10 @@
         >{{todo.title}}</label
       >
       <button
+        [id]="'priority-' + todo.id"
         class="hover:cursor-pointer"
-        (click)="toggleClass($event, 'fill-red-500')"
+        [class.fill-red-500]="todo.completed"
+        (click)="toggleComplete(todo.id)"
       >
         <svg
           version="1.1"
@@ -94,6 +96,7 @@
           </g>
         </svg>
       </button>
+
       <input
         type="checkbox"
         [name]="todo.title"

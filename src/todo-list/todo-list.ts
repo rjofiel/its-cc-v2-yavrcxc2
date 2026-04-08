@@ -33,6 +33,10 @@ export class TodoListComponent {
     el?.classList.toggle(className);
   }
 
+  toggleComplete(todoId: string) {
+    this.store.toggleComplete(todoId);
+  }
+
   public onSubmit = () => {
     const { title, priority } = this.todoForm.value;
     this.store.addTodo(title, priority);
