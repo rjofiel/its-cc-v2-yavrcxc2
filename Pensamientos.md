@@ -4,12 +4,25 @@ Durante la configuración inicial de Jest para Angular hubo varios problemas:
 
 1. **Paquetes Jest faltantes**: Fue necesario instalar la paqueteria necesaria.
 
+  ```json
+  {
+    "@types/jest": "^30.0.0",
+    "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "jest-preset-angular": "^16.1.2",
+    "jsdom": "^29.0.2",
+  }
+  ```
+
 2. **Faltaba configurar tsconfig.spec.json**: Se creo una configuracion basica.
 
-2. **jest-preset-angular v16**: requiere setup especifico
-   ```typescript
+3. **jest-preset-angular**: La configuración inicial era incorrecta. Siguiendo la documentación, se actualizaron los imports correspondientes. Dado que estamos trabajando con Angular 21, se ha optado por un enfoque zoneless para evitar la necesidad de instalar zone.js, aunque esto requiere una configuración específica:
+
+  ```typescript
    // setup-jest.ts
-   import 'jest-preset-angular/setup-env/zone';
+   import { setupZonelessTestEnv } from 'jest-preset-angular/setup-env/zoneless';
+
+  setupZonelessTestEnv();
    ```
 ---
 
@@ -32,7 +45,7 @@ El codigo usa solo signals en memoria. Si el usuario actualiza la pagina, pierde
 - Alternativa: Consumir dummyjson para datos reales - No existee persistencia se deberia de ampliar a usar localStorage pero separando deleted y added.
 
 ### 3. Validación de Formulario
-Solo validacion de required. Faltaria validar longitud minima/maxima del titulo y mostrar mensajes de error.
+No existe validacion del formulario, no hay control. Se deberia de agregar validacion de required, logitudes.
 
 ### 4. Tests E2E (Cypress/Playwright - Testing Library)
 Solo hay tests unitarios.
@@ -43,6 +56,18 @@ Solo hay delete. Faltaria agregar la posibiliad de cambiar la prioridad.
 
 ### 6. Editar Tarea Existente
 Solo hay delete. Faltaria agregar modo de edicion (Nuevo formulario).
+
+### 7. Separación en componentes de `todo-list`
+
+Actualmente, toda la lógica y la estructura están concentradas en el componente `todo-list`. Para cumplir con el principio de responsabilidad única (SRP), lo recomendable es separar este componente en partes y desacopladas, cada una con una responsabilidad clara.
+
+También sería necesario aplicar esta misma separación en sus correspondientes tests.
+
+**Propuesta de estructura:**
+- `todo-list` → contenedor principal
+- `todo-item` → representación de cada tarea
+- `todo-form` → creación de nuevas tareas
+- `todo-filter` → filtrado de tareas
 
 ---
 
