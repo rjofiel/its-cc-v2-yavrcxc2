@@ -12,6 +12,15 @@
         aria-describedby="title-error"
       />
     </div>
+
+    <div class="form-group">
+      <label for="priority" class="visually-hidden">Prioridad</label>
+      <select id="priority" formControlName="priority">
+        <option [value]="1">Baja</option>
+        <option [value]="2">Media</option>
+        <option [value]="3">Alta</option>
+      </select>
+    </div>
   </form>
 
   <ul class="flex flex-col justify-center gap-4 p-2" id="todoList">
