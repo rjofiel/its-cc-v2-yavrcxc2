@@ -123,4 +123,19 @@ describe("TodoListComponent", () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector("#todo-filters")).toBeTruthy();
   });
+
+  it('should display "Todas" button', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain("Todas");
+  });
+
+  it('should display "Pendientes" button', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain("Pendientes");
+  });
+
+  it('should display "Completadas" button', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain("Completadas");
+  });
 });
