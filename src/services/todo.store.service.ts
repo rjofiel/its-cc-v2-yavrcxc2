@@ -22,4 +22,12 @@ export class TodoStore {
   public deleteTodo = (id: string) => {
     this._todos.update((todos) => todos.filter((todo) => todo.id !== id));
   };
+
+  public toggleComplete = (id: string) => {
+    this._todos.update((todos) => {
+      return todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+      );
+    });
+  };
 }
