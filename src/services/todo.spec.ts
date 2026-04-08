@@ -32,7 +32,13 @@ describe("TodoStore Service", () => {
     const todo = store.todos()[0];
 
     store.deleteTodo(todo.id);
-
     expect(store.todos()).toHaveLength(0);
+  })
+
+  it('should set completed as false by default ', () => {
+    const store = new TodoStore();
+    store.addTodo('Task 1', 1);
+
+    expect(store.todos()[0].completed).toBeFalsy();
   })
 });
