@@ -23,7 +23,7 @@ describe("TodoListComponent", () => {
           provide: TodoStore,
           useValue: {
             todos: signal(mockTodos),
-            addTodos: jest.fn(),
+            addTodo: jest.fn(),
             deleteTodos: jest.fn(),
             toggleComplete: jest.fn(),
           },
