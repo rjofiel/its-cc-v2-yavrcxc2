@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './todo-list.html',
 })
 export class TodoListComponent  {
-  count = signal<number>(0)
+  public count = signal<number>(0)
 
   constructor() {
     effect(() => {

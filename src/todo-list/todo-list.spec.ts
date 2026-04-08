@@ -9,16 +9,22 @@ describe('TodoListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TodoListComponent],
+      
     }).compileComponents();
 
     fixture = TestBed.createComponent(TodoListComponent);
     component = fixture.componentInstance;
+
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should TodoStore initialized', () => {
+    expect(component.store).toBeTruthy();
+  })
 
   it('should contain tasks', () => {
     const todoListElement = document.querySelector('#todoList');
