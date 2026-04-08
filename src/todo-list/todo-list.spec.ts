@@ -86,4 +86,9 @@ describe("TodoListComponent", () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector("#title")).toBeTruthy();
   });
+
+  it("should have priority select", () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector("#priority")).toBeTruthy();
+  });
 });
