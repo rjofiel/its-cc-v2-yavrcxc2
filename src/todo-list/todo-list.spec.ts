@@ -23,6 +23,7 @@ describe("TodoListComponent", () => {
           provide: TodoStore,
           useValue: {
             todos: signal(mockTodos),
+            filteredTodos: signal(mockTodos),
             addTodo: jest.fn(),
             deleteTodo: jest.fn(),
             toggleComplete: jest.fn(),
@@ -147,4 +148,11 @@ describe("TodoListComponent", () => {
 
     expect(store.setFilter).toHaveBeenCalledWith("all");
   });
+
+  it('should call toggleComplete when priority button is clicked', () => {
+        const button = fixture.nativeElement.querySelector('#priority-1') as HTMLButtonElement;
+        button.click();
+        
+        expect(store.toggleComplete).toHaveBeenCalledWith('1');
+      });
 });
