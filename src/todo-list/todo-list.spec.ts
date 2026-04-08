@@ -41,118 +41,131 @@ describe("TodoListComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
-    expect(component).toBeTruthy();
+  describe("Creation", () => {
+    it("should create", () => {
+      expect(component).toBeTruthy();
+    });
+
+    it("should TodoStore initialized", () => {
+      expect(component.store).toBeTruthy();
+    });
   });
 
-  it("should TodoStore initialized", () => {
-    expect(component.store).toBeTruthy();
+  describe("Template: Form", () => {
+    it("should have todo form to create forms", () => {
+      expect(component.todoForm).toBeTruthy();
+    });
+
+    it("should have a todo form section", () => {
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.querySelector("#todo-form")).toBeTruthy();
+    });
+
+    it("should have title input", () => {
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.querySelector("#title")).toBeTruthy();
+    });
+
+    it("should have priority select", () => {
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.querySelector("#priority")).toBeTruthy();
+    });
+
+    it("should have submit button", () => {
+      const compiled = fixture.nativeElement as HTMLElement;
+      const button = compiled.querySelector(
+        'button[type="submit"]',
+      ) as HTMLButtonElement;
+      expect(button).toBeTruthy();
+      expect(button.textContent).toContain("Agregar");
+    });
   });
 
-  it("should contain tasks", () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    const todoListElement = compiled.querySelector("#todoList");
-    expect(todoListElement!.children).toHaveLength(mockTodos.length);
+  describe("Template: Filters", () => {
+    it("should have a todo filter section", () => {
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.querySelector("#todo-filters")).toBeTruthy();
+    });
+
+    it('should display "Todas" button', () => {
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.textContent).toContain("Todas");
+    });
+
+    it('should display "Pendientes" button', () => {
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.textContent).toContain("Pendientes");
+    });
+
+    it('should display "Completadas" button', () => {
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.textContent).toContain("Completadas");
+    });
   });
 
-  it("should toggle test class when clicked", async () => {
-    await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-
-    const todoTaskElement = compiled.querySelector("#todoList>li");
-
-    component.toggleClass(
-      { currentTarget: todoTaskElement } as MouseEvent,
-      "test",
-    );
-
-    expect(todoTaskElement!.className).toContain("test");
-
-    component.toggleClass(
-      { currentTarget: todoTaskElement } as MouseEvent,
-      "test",
-    );
-
-    expect(todoTaskElement!.className).not.toContain("test");
+  describe("Template: Todo List", () => {
+    it("should contain tasks", () => {
+      const compiled = fixture.nativeElement as HTMLElement;
+      const todoListElement = compiled.querySelector("#todoList");
+      expect(todoListElement!.children).toHaveLength(mockTodos.length);
+    });
   });
 
-  it("should have todo form to create forms", () => {
-    expect(component.todoForm).toBeTruthy();
+  describe("Interactions", () => {
+    it("should call addTodo when form is submitted", () => {
+      component.todoForm.get("title")?.setValue("Test Task");
+      component.todoForm.get("priority")?.setValue(2);
+
+      component.onSubmit();
+
+      expect(store.addTodo).toHaveBeenCalledWith("Test Task", 2);
+    });
+
+    it('should call setFilter with "all" when Todas is clicked', () => {
+      const buttons = fixture.nativeElement.querySelectorAll("#todo-filters>button");
+      (buttons[0] as HTMLButtonElement).click();
+
+      expect(store.setFilter).toHaveBeenCalledWith("all");
+    });
+
+    it('should call toggleComplete when checkbox is clicked', () => {
+      const button = fixture.nativeElement.querySelector('#priority-1') as HTMLButtonElement;
+      button.click();
+      
+      expect(store.toggleComplete).toHaveBeenCalledWith('1');
+    });
+
+    it("should call deleteTodo when delete button is clicked", () => {
+      const deleteBtn = fixture.nativeElement.querySelector(
+        ".delete-btn",
+      ) as HTMLButtonElement;
+      deleteBtn.click();
+
+      expect(store.deleteTodo).toHaveBeenCalledWith("1");
+    });
   });
 
-  it("should have a todo form section", () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector("#todo-form")).toBeTruthy();
+  // ==================== COMPONENT LOGIC ====================
+  describe("Component Logic", () => {
+    it("should toggle test class when clicked", async () => {
+      await fixture.whenStable();
+      const compiled = fixture.nativeElement as HTMLElement;
+
+      const todoTaskElement = compiled.querySelector("#todoList>li");
+
+      component.toggleClass(
+        { currentTarget: todoTaskElement } as MouseEvent,
+        "test",
+      );
+
+      expect(todoTaskElement!.className).toContain("test");
+
+      component.toggleClass(
+        { currentTarget: todoTaskElement } as MouseEvent,
+        "test",
+      );
+
+      expect(todoTaskElement!.className).not.toContain("test");
+    });
   });
-
-  it("should have title input", () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector("#title")).toBeTruthy();
-  });
-
-  it("should have priority select", () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector("#priority")).toBeTruthy();
-  });
-
-  it("should have submit button", () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    const button = compiled.querySelector(
-      'button[type="submit"]',
-    ) as HTMLButtonElement;
-    expect(button).toBeTruthy();
-    expect(button.textContent).toContain("Agregar");
-  });
-
-  it("should call addTodo when form is submitted", () => {
-    component.todoForm.get("title")?.setValue("Test Task");
-    component.todoForm.get("priority")?.setValue(2);
-
-    component.onSubmit();
-
-    expect(store.addTodo).toHaveBeenCalledWith("Test Task", 2);
-  });
-
-  it("should call deleteTodo when delete button is clicked", () => {
-    const deleteBtn = fixture.nativeElement.querySelector(
-      ".delete-btn",
-    ) as HTMLButtonElement;
-    deleteBtn.click();
-
-    expect(store.deleteTodo).toHaveBeenCalledWith("1");
-  });
-
-  it("should have a todo filter section", () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector("#todo-filters")).toBeTruthy();
-  });
-
-  it('should display "Todas" button', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain("Todas");
-  });
-
-  it('should display "Pendientes" button', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain("Pendientes");
-  });
-
-  it('should display "Completadas" button', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain("Completadas");
-  });
-
-  it('should call setFilter with "all" when Todas is clicked', () => {
-    const buttons = fixture.nativeElement.querySelectorAll("#todo-filters>button");
-    (buttons[0] as HTMLButtonElement).click();
-
-    expect(store.setFilter).toHaveBeenCalledWith("all");
-  });
-
-  it('should call toggleComplete when priority button is clicked', () => {
-        const button = fixture.nativeElement.querySelector('#priority-1') as HTMLButtonElement;
-        button.click();
-        
-        expect(store.toggleComplete).toHaveBeenCalledWith('1');
-      });
 });
