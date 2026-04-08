@@ -138,4 +138,11 @@ describe("TodoListComponent", () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain("Completadas");
   });
+
+  it('should call setFilter with "all" when Todas is clicked', () => {
+      const buttons = fixture.nativeElement.querySelectorAll('button');
+      (buttons[0] as HTMLButtonElement).click();
+      
+      expect(store.setFilter).toHaveBeenCalledWith('all');
+    });
 });
