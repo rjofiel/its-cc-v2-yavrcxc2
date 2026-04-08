@@ -31,4 +31,9 @@ export class TodoListComponent {
     const el = ev.currentTarget as HTMLElement;
     el?.classList.toggle(className);
   }
+
+  public onSubmit = () => {
+      const { title, priority } = this.todoForm.value;
+      this.store.addTodo(title, priority);
+  }
 }
