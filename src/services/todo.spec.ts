@@ -11,8 +11,8 @@ describe("TodoStore Service", () => {
     const store = new TodoStore();
     store.addTodo('Task 1', 1);
 
-    expect(store.todos).toHaveLength(1);
-    expect(store.todos[0].title).toEqual('Task 1')
-    expect(store.todos[0].priority).toEqual(1)
+    expect(store.todos()).toHaveLength(1);
+    expect(store.todos()[0].title).toEqual('Task 1')
+    expect(store.todos()[0].priority).toEqual(1)
   })
 });
