@@ -8,8 +8,8 @@ import { TodoStore } from '../services/todo.store.service';
   templateUrl: './todo-list.html',
 })
 export class TodoListComponent  {
-  public count = signal<number>(0)
   public readonly store = inject(TodoStore);
+  public count = signal<number>(0)
 
   constructor() {
     effect(() => {
@@ -19,7 +19,7 @@ export class TodoListComponent  {
 
   toggleClass(ev: MouseEvent, className: string) {
     const el = ev.currentTarget as HTMLElement;
-    el.classList.toggle(className);
+    el?.classList.toggle(className);
   }
 
 }
