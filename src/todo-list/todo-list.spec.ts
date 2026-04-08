@@ -91,4 +91,13 @@ describe("TodoListComponent", () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector("#priority")).toBeTruthy();
   });
+
+  it("should call addTodo when form is submitted", () => {
+    component.todoForm.get("title")?.setValue("Test Task");
+    component.todoForm.get("priority")?.setValue(2);
+
+    component.onSubmit();
+
+    expect(store.addTodo).toHaveBeenCalledWith("Test Task", 2);
+  });
 });
