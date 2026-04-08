@@ -10,7 +10,12 @@ export class TodoStore {
   public todos = this._todos.asReadonly();
 
   public addTodo = (title: string, priority: number) => {
-    const todo: Todo = { title, priority, id: crypto.randomUUID() };
+    const todo: Todo = {
+      title,
+      priority,
+      id: crypto.randomUUID(),
+      completed: false,
+    };
     this._todos.update((todos) => [...todos, todo]);
   };
 
