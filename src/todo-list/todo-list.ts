@@ -2,7 +2,7 @@ import { Component, signal, effect, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { TodoStore } from "../services/todo.store.service";
 import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
-import { Todo } from "../models/todo";
+import { TodoFilter } from "../models/todo";
 
 @Component({
   selector: "app-todo-list",
@@ -13,6 +13,7 @@ export class TodoListComponent {
   private fb = inject(FormBuilder);
 
   public readonly store = inject(TodoStore);
+  currentFilter = this.store.filter;
 
   public count = signal<number>(0);
 
@@ -39,5 +40,9 @@ export class TodoListComponent {
 
   public delete = (id: string) => {
     this.store.deleteTodo(id);
+  };
+
+  public setFilter = (filter: TodoFilter) => {
+    this.store.setFilter(filter);
   };
 }

@@ -9,6 +9,8 @@ export class TodoStore {
   private readonly _filter = signal<TodoFilter>("all");
 
   public todos = this._todos.asReadonly();
+  public filter = this._filter.asReadonly();
+
 
   public filteredTodos = computed(() => {
     const todos = this._todos();

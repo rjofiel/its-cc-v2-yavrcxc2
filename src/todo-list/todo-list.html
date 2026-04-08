@@ -32,9 +32,30 @@
   </form>
 
   <section id="todo-filters" role="group" aria-label="Filtrar tareas">
-    <button type="button">Todas</button>
-    <button type="button">Pendientes</button>
-    <button type="button">Completadas</button>
+    <button
+      type="button"
+      [class.active]="currentFilter() === 'all'"
+      (click)="setFilter('all')"
+      [attr.aria-pressed]="currentFilter() === 'all'"
+    >
+      Todas
+    </button>
+    <button
+      type="button"
+      [class.active]="currentFilter() === 'pending'"
+      (click)="setFilter('pending')"
+      [attr.aria-pressed]="currentFilter() === 'pending'"
+    >
+      Pendientes
+    </button>
+    <button
+      type="button"
+      [class.active]="currentFilter() === 'completed'"
+      (click)="setFilter('completed')"
+      [attr.aria-pressed]="currentFilter() === 'completed'"
+    >
+      Completadas
+    </button>
   </section>
 
   <ul class="flex flex-col justify-center gap-4 p-2" id="todoList">

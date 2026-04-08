@@ -26,6 +26,8 @@ describe("TodoListComponent", () => {
             addTodo: jest.fn(),
             deleteTodo: jest.fn(),
             toggleComplete: jest.fn(),
+            filter: signal("all"),
+            setFilter: jest.fn(),
           },
         },
       ],
@@ -140,9 +142,9 @@ describe("TodoListComponent", () => {
   });
 
   it('should call setFilter with "all" when Todas is clicked', () => {
-      const buttons = fixture.nativeElement.querySelectorAll('button');
-      (buttons[0] as HTMLButtonElement).click();
-      
-      expect(store.setFilter).toHaveBeenCalledWith('all');
-    });
+    const buttons = fixture.nativeElement.querySelectorAll("#todo-filters>button");
+    (buttons[0] as HTMLButtonElement).click();
+
+    expect(store.setFilter).toHaveBeenCalledWith("all");
+  });
 });
