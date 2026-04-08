@@ -24,7 +24,7 @@ describe("TodoListComponent", () => {
           useValue: {
             todos: signal(mockTodos),
             addTodo: jest.fn(),
-            deleteTodos: jest.fn(),
+            deleteTodo: jest.fn(),
             toggleComplete: jest.fn(),
           },
         },
