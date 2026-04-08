@@ -2,9 +2,8 @@
 import { TodoStore } from "./todo.store.service";
 
 describe("TodoStore Service", () => {
-
   let store: TodoStore;
-  
+
   beforeEach(() => {
     store = new TodoStore();
   });
@@ -51,5 +50,16 @@ describe("TodoStore Service", () => {
     store.toggleComplete(todo.id);
 
     expect(store.todos()[0].completed).toBe(true);
+  });
+
+  it("should filter completed todos", () => {
+    store.addTodo("Task 1", 1);
+    store.addTodo("Task 2", 1);
+
+    store.toggleComplete(store.todos()[0].id);
+    store.setFilter("completed");
+
+    expect(store.filteredTodos().length).toBe(1);
+    expect(store.filteredTodos()[0].title).toBe("Task 1");
   });
 });
